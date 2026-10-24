@@ -1,0 +1,15 @@
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\bin\Debug\net10.0\TicketFlow.BLL.deps.json
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\bin\Debug\net10.0\TicketFlow.BLL.dll
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\bin\Debug\net10.0\TicketFlow.BLL.pdb
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\bin\Debug\net10.0\TicketFlow.DAL.dll
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\bin\Debug\net10.0\TicketFlow.DAL.pdb
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\TicketFlow.BLL.csproj.AssemblyReference.cache
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\TicketFlow.BLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\TicketFlow.BLL.AssemblyInfoInputs.cache
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\TicketFlow.BLL.AssemblyInfo.cs
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\TicketFlow.BLL.csproj.CoreCompileInputs.cache
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\TicketFl.72328EBB.Up2Date
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\TicketFlow.BLL.dll
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\refint\TicketFlow.BLL.dll
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\TicketFlow.BLL.pdb
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.BLL\obj\Debug\net10.0\ref\TicketFlow.BLL.dll

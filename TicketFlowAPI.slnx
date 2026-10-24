@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="D:/PROJECTS/coding shit/C#/TicketFlowAPI/TicketFlow.API/TicketFlow.API.csproj" />
+  <Project Path="D:/PROJECTS/coding shit/C#/TicketFlowAPI/TicketFlow.BLL/TicketFlow.BLL.csproj" />
+  <Project Path="D:/PROJECTS/coding shit/C#/TicketFlowAPI/TicketFlow.DAL/TicketFlow.DAL.csproj" />
+</Solution>

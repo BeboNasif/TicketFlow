@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\PROJECTS\\coding shit\\C#\\TicketFlowAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B229B4-51E7-47E3-AAEA-FCF3F9D23852}|TicketFlow.BLL\\TicketFlow.BLL.csproj|d:\\projects\\coding shit\\c#\\ticketflowapi\\ticketflow.bll\\ticketflow.bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F6B229B4-51E7-47E3-AAEA-FCF3F9D23852}|TicketFlow.BLL\\TicketFlow.BLL.csproj|solutionrelative:ticketflow.bll\\ticketflow.bll.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6B229B4-51E7-47E3-AAEA-FCF3F9D23852}|TicketFlow.BLL\\TicketFlow.BLL.csproj|d:\\projects\\coding shit\\c#\\ticketflowapi\\ticketflow.bll\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6B229B4-51E7-47E3-AAEA-FCF3F9D23852}|TicketFlow.BLL\\TicketFlow.BLL.csproj|solutionrelative:ticketflow.bll\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{141A7C31-0361-4CB7-8FA2-996EA6A62908}|TicketFlow.DAL\\TicketFlow.DAL.csproj|d:\\projects\\coding shit\\c#\\ticketflowapi\\ticketflow.dal\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{141A7C31-0361-4CB7-8FA2-996EA6A62908}|TicketFlow.DAL\\TicketFlow.DAL.csproj|solutionrelative:ticketflow.dal\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TicketFlow.BLL",
+              "DocumentMoniker": "D:\\PROJECTS\\coding shit\\C#\\TicketFlowAPI\\TicketFlow.BLL\\TicketFlow.BLL.csproj",
+              "RelativeDocumentMoniker": "TicketFlow.BLL\\TicketFlow.BLL.csproj",
+              "ToolTip": "D:\\PROJECTS\\coding shit\\C#\\TicketFlowAPI\\TicketFlow.BLL\\TicketFlow.BLL.csproj*",
+              "RelativeToolTip": "TicketFlow.BLL\\TicketFlow.BLL.csproj*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-21T17:56:40.793Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\PROJECTS\\coding shit\\C#\\TicketFlowAPI\\TicketFlow.BLL\\Program.cs",
+              "RelativeDocumentMoniker": "TicketFlow.BLL\\Program.cs",
+              "ToolTip": "D:\\PROJECTS\\coding shit\\C#\\TicketFlowAPI\\TicketFlow.BLL\\Program.cs",
+              "RelativeToolTip": "TicketFlow.BLL\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-21T17:55:57.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\PROJECTS\\coding shit\\C#\\TicketFlowAPI\\TicketFlow.DAL\\Program.cs",
+              "RelativeDocumentMoniker": "TicketFlow.DAL\\Program.cs",
+              "ToolTip": "D:\\PROJECTS\\coding shit\\C#\\TicketFlowAPI\\TicketFlow.DAL\\Program.cs",
+              "RelativeToolTip": "TicketFlow.DAL\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-21T17:55:33.973Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
