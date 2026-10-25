@@ -10,3 +10,4 @@ D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.DAL\obj\Debug\net10.0\Ticket
 D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.DAL\obj\Debug\net10.0\refint\TicketFlow.DAL.dll
 D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.DAL\obj\Debug\net10.0\TicketFlow.DAL.pdb
 D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.DAL\obj\Debug\net10.0\ref\TicketFlow.DAL.dll
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.DAL\obj\Debug\net10.0\TicketFlow.DAL.sourcelink.json

@@ -14,6 +14,7 @@ public class EventRepository : GenericRepository<Event>, IEventRepository
     public async Task<Event?> GetEventWithDetailsAsync(Guid eventId, CancellationToken cancellationToken = default)
     {
         return await _dbSet
+            .Include(e => e.Category)
             .Include(e => e.Place)
             .Include(e => e.Organizer)
             .AsNoTracking()
@@ -29,12 +30,14 @@ public class EventRepository : GenericRepository<Event>, IEventRepository
     {
         var query = _dbSet
             .Where(e => e.Status == EventStatusEnum.Published)
+            .Include(e => e.Category)
             .Include(e => e.Place)
+            .Include(e => e.Organizer)
             .AsNoTracking();
 
         if (!string.IsNullOrWhiteSpace(category))
         {
-            query = query.Where(e => e.Category.ToLower() == category.ToLower());
+            query = query.Where(e => e.Category.Name.ToLower() == category.ToLower());
         }
 
         if (startDate.HasValue)

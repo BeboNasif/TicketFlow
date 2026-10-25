@@ -6,7 +6,7 @@ using TicketFlow.DAL.Models;
 
 namespace TicketFlow.DAL.Repo.Interfaces
 {
-    public interface IEventRepository
+    public interface IEventRepository : IGenericRepository<Event>
     {
         Task<Event?> GetEventWithDetailsAsync(Guid eventId, CancellationToken cancellationToken = default); 
         Task<IReadOnlyList<Event>> GetPublishedEventsAsync(

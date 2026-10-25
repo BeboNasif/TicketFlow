@@ -13,6 +13,7 @@ namespace TicketFlow.DAL.Models
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
+
         public Guid UserId { get; set; }
         public Guid EventId { get; set; }
         public DateTime ReservedAt { get; set; } = DateTime.UtcNow;
@@ -20,11 +21,9 @@ namespace TicketFlow.DAL.Models
         public ReservationStatusEnum Status { get; set; } = ReservationStatusEnum.Pending;
 
         [ForeignKey(nameof(UserId))]
-        [DeleteBehavior(DeleteBehavior.Restrict)]
         public AppUser User { get; set; } = null!;
 
         [ForeignKey(nameof(EventId))]
-        [DeleteBehavior(DeleteBehavior.Restrict)]
         public Event Event { get; set; } = null!;
 
         public ICollection<ReservationItem> ReservationItems { get; set; } = new List<ReservationItem>();

@@ -17,7 +17,7 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
             .Include(o => o.Payment)
             .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.EventSeat)
-                    .ThenInclude(es => es.seat)
+                    .ThenInclude(es => es.Seat)
             .AsNoTracking()
             .FirstOrDefaultAsync(o => o.Id == orderId, cancellationToken);
     }

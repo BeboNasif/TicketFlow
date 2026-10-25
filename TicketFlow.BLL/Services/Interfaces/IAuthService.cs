@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TicketFlow.BLL.DTOs.Auth;
 
 namespace TicketFlow.BLL.Services.Interfaces

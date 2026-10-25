@@ -148,3 +148,4 @@ D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.API\bin\Debug\net10.0\Google
 D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.API\bin\Debug\net10.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.API\bin\Debug\net10.0\System.Management.dll
 D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.API\bin\Debug\net10.0\runtimes\win\lib\net7.0\System.Management.dll
+D:\PROJECTS\coding shit\C#\TicketFlowAPI\TicketFlow.API\obj\Debug\net10.0\TicketFlow.API.sourcelink.json

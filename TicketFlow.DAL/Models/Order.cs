@@ -12,6 +12,7 @@ namespace TicketFlow.DAL.Models
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
+
         public Guid UserId { get; set; }
         public Guid? ReservationId { get; set; }
 
@@ -20,13 +21,10 @@ namespace TicketFlow.DAL.Models
         public OrderStatusEnum Status { get; set; } = OrderStatusEnum.Pending;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Navigation Properties
         [ForeignKey(nameof(UserId))]
-        [DeleteBehavior(DeleteBehavior.Restrict)]
         public AppUser User { get; set; } = null!;
 
         [ForeignKey(nameof(ReservationId))]
-        [DeleteBehavior(DeleteBehavior.SetNull)]
         public Reservation? Reservation { get; set; }
 
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();

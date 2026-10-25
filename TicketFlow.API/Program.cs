@@ -36,7 +36,6 @@ builder.Services.AddAuthentication(options =>
         ClockSkew = TimeSpan.Zero
     };
 
-    // 🚀 Validate token via BLL Service (No DAL references in API layer)
     options.Events = new JwtBearerEvents
     {
         OnTokenValidated = async context =>

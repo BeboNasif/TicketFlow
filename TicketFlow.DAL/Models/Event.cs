@@ -11,9 +11,11 @@ namespace TicketFlow.DAL.Models
     public class Event
     {
         [Key]
-        public Guid Id{ get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } = Guid.NewGuid();
+
         public Guid PlaceId { get; set; }
         public Guid OrganizerId { get; set; }
+        public Guid CategoryId { get; set; }
 
         [Required]
         [MaxLength(200)]
@@ -22,23 +24,23 @@ namespace TicketFlow.DAL.Models
         [MaxLength(2000)]
         public string Description { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(100)]
-        public string Category { get; set; } = string.Empty;
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public EventStatusEnum Status = EventStatusEnum.Draft;
+        public EventStatusEnum Status { get; set; } = EventStatusEnum.Draft;
 
+        // PostgreSQL native concurrency token (mapped to xmin in DbContext)
         [Timestamp]
-        public byte[] RowVersion { get; set; } = Array.Empty<byte>();
+        public uint Version { get; set; }
+
+        [ForeignKey(nameof(CategoryId))]
+        public Category Category { get; set; } = null!;
 
         [ForeignKey(nameof(PlaceId))]
-        [DeleteBehavior(DeleteBehavior.Restrict)]
         public Place Place { get; set; } = null!;
 
         [ForeignKey(nameof(OrganizerId))]
-        [DeleteBehavior(DeleteBehavior.Restrict)]
         public AppUser Organizer { get; set; } = null!;
+
         public ICollection<EventSeat> EventSeats { get; set; } = new List<EventSeat>();
         public ICollection<Reservation> Reservations { get; set; } = new List<Reservation>();
     }

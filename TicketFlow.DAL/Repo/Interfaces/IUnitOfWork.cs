@@ -19,6 +19,7 @@ namespace TicketFlow.DAL.Repo.Interfaces
         IGenericRepository<ReservationItem> ReservationItems { get; }
         IGenericRepository<OrderItem> OrderItems { get; }
         IGenericRepository<Payment> Payments { get; }
+        IGenericRepository<Category> Categories { get; }
 
         IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class;
 

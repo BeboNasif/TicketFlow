@@ -30,6 +30,7 @@ namespace TicketFlow.DAL.Repo.Classes
             Payments = new GenericRepository<Payment>(_context);
             ReservationItems = new GenericRepository<ReservationItem>(_context);
             OrderItems = new GenericRepository<OrderItem>(_context);
+            Categories = new GenericRepository<Category>(_context);
         }
         public IEventSeatRepository EventSeats { get; }
         public IReservationRepository Reservations { get; }
@@ -40,6 +41,7 @@ namespace TicketFlow.DAL.Repo.Classes
         public IGenericRepository<ReservationItem> ReservationItems { get; }
         public IGenericRepository<OrderItem> OrderItems { get; }
         public IGenericRepository<Payment> Payments { get; }
+        public IGenericRepository<Category> Categories { get; }
 
         public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class
         {

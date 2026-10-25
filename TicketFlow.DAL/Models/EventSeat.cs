@@ -13,23 +13,23 @@ namespace TicketFlow.DAL.Models
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
+
         public Guid EventId { get; set; }
         public Guid SeatId { get; set; }
 
         [Precision(18, 2)]
-        public Decimal Price { get; set; }
-        public SeatStatusEnum status { get; set; } = SeatStatusEnum.Available;
+        public decimal Price { get; set; }
+        public SeatStatusEnum Status { get; set; } = SeatStatusEnum.Available;
+
+        [Timestamp]
+        public uint Version { get; set; }
 
         [ForeignKey(nameof(EventId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
         public Event Event { get; set; } = null!;
 
         [ForeignKey(nameof(SeatId))]
-        [DeleteBehavior(DeleteBehavior.Restrict)]
-        public Seat seat { get; set; } = null!;
+        public Seat Seat { get; set; } = null!;
 
-        [Timestamp]
-        public byte[] RowVersion { get; set; } = Array.Empty<byte>();
         public ICollection<ReservationItem> ReservationItems { get; set; } = new List<ReservationItem>();
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }

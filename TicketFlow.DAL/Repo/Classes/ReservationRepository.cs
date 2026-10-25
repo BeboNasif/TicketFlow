@@ -27,6 +27,7 @@ public class ReservationRepository : GenericRepository<Reservation>, IReservatio
             .Include(r => r.Event)
             .Include(r => r.ReservationItems)
                 .ThenInclude(ri => ri.EventSeat)
+                .ThenInclude(es => es.Seat)
             .FirstOrDefaultAsync(r => r.Id == reservationId, cancellationToken);
     }
 }

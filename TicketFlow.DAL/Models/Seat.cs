@@ -29,7 +29,6 @@ namespace TicketFlow.DAL.Models
         public decimal BasePrice { get; set; }
 
         [ForeignKey(nameof(PlaceId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
         public Place Place { get; set; } = null!;
 
         public ICollection<EventSeat> EventSeats { get; set; } = new List<EventSeat>();

@@ -19,7 +19,8 @@ namespace TicketFlow.DAL.Models
         [MaxLength(300)]
         public string Address { get; set; } = string.Empty;
 
-        public int Cap { get; set; }
+        public int Capacity { get; set; }
+
         public ICollection<Event> Events { get; set; } = new List<Event>();
         public ICollection<Seat> Seats { get; set; } = new List<Seat>();
     }

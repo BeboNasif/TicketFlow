@@ -17,6 +17,10 @@ public static class BLLServiceRegister
 
         services.AddAutoMapper(_ => { }, typeof(MappingProfile).Assembly);
 
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IPlaceService, PlaceService>();
+        services.AddScoped<IEventService, EventService>();
+        services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddSingleton<IPhoneVerificationService, PhoneVerificationService>();
         services.AddScoped<IAuthService, AuthService>();
