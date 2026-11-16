@@ -11,5 +11,6 @@ namespace TicketFlow.BLL.Services.Interfaces
         Task<ReservationDto> CreateReservationAsync(Guid userId, CreateReservationDto dto);
         Task<ReservationDto?> GetReservationByIdAsync(Guid userId, Guid reservationId);
         Task<bool> CancelReservationAsync(Guid userId, Guid reservationId);
+        Task<int> ProcessExpiredReservationsAsync(CancellationToken cancellationToken = default);
     }
 }

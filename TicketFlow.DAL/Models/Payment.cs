@@ -29,7 +29,6 @@ namespace TicketFlow.DAL.Models
 
         // Navigation Properties
         [ForeignKey(nameof(OrderId))]
-        [DeleteBehavior(DeleteBehavior.Cascade)]
         public Order Order { get; set; } = null!;
     }
 }

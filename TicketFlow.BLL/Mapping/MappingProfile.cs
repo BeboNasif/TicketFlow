@@ -3,6 +3,7 @@ using TicketFlow.BLL.DTOs.Account;
 using TicketFlow.BLL.DTOs.Auth;
 using TicketFlow.BLL.DTOs.Category;
 using TicketFlow.BLL.DTOs.Event;
+using TicketFlow.BLL.DTOs.Order;
 using TicketFlow.BLL.DTOs.Place;
 using TicketFlow.BLL.DTOs.Reservation;
 using TicketFlow.DAL.Models;
@@ -60,6 +61,22 @@ namespace TicketFlow.BLL.Mapping
                 .ForMember(dest => dest.Section, opt => opt.MapFrom(src => src.EventSeat.Seat.Section))
                 .ForMember(dest => dest.Row, opt => opt.MapFrom(src => src.EventSeat.Seat.Row))
                 .ForMember(dest => dest.SeatNumber, opt => opt.MapFrom(src => src.EventSeat.Seat.SeatNumber));
+            
+            
+            CreateMap<Order, OrderDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.OrderItems));
+
+            CreateMap<OrderItem, OrderItemDto>()
+                .ForMember(dest => dest.Section, opt => opt.MapFrom(src => src.EventSeat.Seat.Section))
+                .ForMember(dest => dest.Row, opt => opt.MapFrom(src => src.EventSeat.Seat.Row))
+                .ForMember(dest => dest.SeatNumber, opt => opt.MapFrom(src => src.EventSeat.Seat.SeatNumber));
+
+            CreateMap<Payment, PaymentDto>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()));
+
+            CreateMap<Reservation, ReservationDto>()
+                .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.ReservationItems.Sum(ri => ri.Price)));
         }
     }
 }

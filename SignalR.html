@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TicketFlow - SignalR SeatHub Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        input, button { padding: 8px; margin: 5px 0; }
+        #log { background: #1e1e1e; color: #00ff66; padding: 15px; font-family: monospace; height: 300px; overflow-y: auto; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>TicketFlow SignalR Live Seat Tester</h2>
+
+    <div>
+        <label>Hub URL:</label><br>
+        <input type="text" id="hubUrl" value="http://localhost:5069/hubs/seats" style="width: 350px;"><br>
+
+        <label>Event ID (Guid):</label><br>
+        <input type="text" id="eventId" placeholder="Paste target Event GUID here" style="width: 350px;"><br><br>
+
+        <button onclick="connectAndJoin()">Connect & Join Event Group</button>
+        <button onclick="leaveGroup()">Leave Group</button>
+    </div>
+
+    <h3>Real-Time Events Log:</h3>
+    <div id="log">Logs will appear here...</div>
+
+    <script>
+        let connection = null;
+
+        function log(msg) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `<div>[${new Date().toLocaleTimeString()}] ${msg}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        async function connectAndJoin() {
+            const hubUrl = document.getElementById('hubUrl').value;
+            const eventId = document.getElementById('eventId').value.trim();
+
+            if (!eventId) {
+                alert("Please enter a valid Event ID GUID!");
+                return;
+            }
+
+            if (!connection) {
+                connection = new signalR.HubConnectionBuilder()
+                    .withUrl(hubUrl)
+                    .withAutomaticReconnect()
+                    .build();
+
+                // Listen for "SeatStatusUpdated" events broadcasted by ISeatNotificationService
+                connection.on("SeatStatusUpdated", (data) => {
+                    log(`🔔 <b>SEAT UPDATE RECEIVED:</b> Status = <b style="color:yellow">${data.status}</b> | Seat IDs = ${JSON.stringify(data.eventSeatIds)}`);
+                });
+            }
+
+            try {
+                if (connection.state === signalR.HubConnectionState.Disconnected) {
+                    await connection.start();
+                    log("✅ Connected to SignalR Hub successfully.");
+                }
+
+                // Call Hub method to join group for this specific event
+                await connection.invoke("JoinEventGroup", eventId);
+                log(`👥 Joined event group: <b>Event_${eventId}</b>`);
+            } catch (err) {
+                log(`❌ Error: ${err.toString()}`);
+            }
+        }
+
+        async function leaveGroup() {
+            const eventId = document.getElementById('eventId').value.trim();
+            if (connection && eventId) {
+                await connection.invoke("LeaveEventGroup", eventId);
+                log(`👋 Left event group: <b>Event_${eventId}</b>`);
+            }
+        }
+    </script>
+</body>
+</html>

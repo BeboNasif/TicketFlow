@@ -14,23 +14,26 @@ namespace TicketFlow.BLL.Services.Classes
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ISeatNotificationService _seatNotificationService;
 
-        public ReservationService(IUnitOfWork unitOfWork, IMapper mapper)
+        public ReservationService(
+            IUnitOfWork unitOfWork,
+            IMapper mapper,
+            ISeatNotificationService seatNotificationService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _seatNotificationService = seatNotificationService;
         }
 
         public async Task<ReservationDto> CreateReservationAsync(Guid userId, CreateReservationDto dto)
         {
             var distinctSeatIds = dto.EventSeatIds.Distinct().ToList();
 
-            // 1. Begin explicit database transaction
             await _unitOfWork.BeginTransactionAsync();
 
             try
             {
-                // 2. Lock requested seats in Available state
                 var availableSeats = await _unitOfWork.EventSeats.GetSeatsForHoldAsync(dto.EventId, distinctSeatIds);
 
                 if (availableSeats.Count != distinctSeatIds.Count)
@@ -38,17 +41,17 @@ namespace TicketFlow.BLL.Services.Classes
                     throw new InvalidOperationException("One or more selected seats are no longer available.");
                 }
 
-                // 3. Instantiate Reservation
                 var reservation = new Reservation
                 {
                     UserId = userId,
                     EventId = dto.EventId,
                     ReservedAt = DateTime.UtcNow,
-                    ExpiresAt = DateTime.UtcNow.AddMinutes(10), // 10-minute hold window
+                    ExpiresAt = DateTime.UtcNow.AddMinutes(10),
                     Status = ReservationStatusEnum.Pending
                 };
 
-                // 4. Update seats and construct reservation items
+                decimal totalAmount = 0;
+
                 foreach (var seat in availableSeats)
                 {
                     seat.Status = SeatStatusEnum.Reserved;
@@ -59,15 +62,134 @@ namespace TicketFlow.BLL.Services.Classes
                         EventSeatId = seat.Id,
                         Price = seat.Price
                     });
+
+                    totalAmount += seat.Price;
                 }
 
-                await _unitOfWork.Reservations.AddAsync(reservation);
+                reservation.TotalAmount = totalAmount;
 
-                // 5. Commit transaction (triggers EF Core concurrency validation via PostgreSQL xmin)
+                await _unitOfWork.Reservations.AddAsync(reservation);
                 await _unitOfWork.CommitTransactionAsync();
+
+                // 📢 Broadcast real-time update: Seats are now Reserved
+                await _seatNotificationService.NotifySeatStatusChangedAsync(
+                    dto.EventId,
+                    distinctSeatIds,
+                    SeatStatusEnum.Reserved.ToString()
+                );
 
                 var createdReservation = await _unitOfWork.Reservations.GetReservationWithItemsAsync(reservation.Id);
                 return _mapper.Map<ReservationDto>(createdReservation);
+            }
+            catch
+            {
+                await _unitOfWork.RollbackTransactionAsync();
+                throw;
+            }
+        }
+
+        public async Task<bool> CancelReservationAsync(Guid userId, Guid reservationId)
+        {
+            await _unitOfWork.BeginTransactionAsync();
+
+            try
+            {
+                var reservation = await _unitOfWork.Reservations.GetReservationWithItemsAsync(reservationId);
+
+                if (reservation == null || reservation.UserId != userId)
+                    return false;
+
+                if (reservation.Status != ReservationStatusEnum.Pending)
+                    throw new InvalidOperationException("Only pending reservations can be cancelled.");
+
+                reservation.Status = ReservationStatusEnum.Cancelled;
+
+                var releasedSeatIds = new List<Guid>();
+
+                foreach (var item in reservation.ReservationItems)
+                {
+                    if (item.EventSeat != null)
+                    {
+                        item.EventSeat.Status = SeatStatusEnum.Available;
+                        _unitOfWork.EventSeats.Update(item.EventSeat);
+                        releasedSeatIds.Add(item.EventSeatId);
+                    }
+                }
+
+                _unitOfWork.Reservations.Update(reservation);
+                await _unitOfWork.CommitTransactionAsync();
+
+                // 📢 Broadcast real-time update: Seats released back to Available
+                if (releasedSeatIds.Any())
+                {
+                    await _seatNotificationService.NotifySeatStatusChangedAsync(
+                        reservation.EventId,
+                        releasedSeatIds,
+                        SeatStatusEnum.Available.ToString()
+                    );
+                }
+
+                return true;
+            }
+            catch
+            {
+                await _unitOfWork.RollbackTransactionAsync();
+                throw;
+            }
+        }
+
+        public async Task<int> ProcessExpiredReservationsAsync(CancellationToken cancellationToken = default)
+        {
+            var expiredReservations = await _unitOfWork.Reservations.GetExpiredPendingReservationsAsync(DateTime.UtcNow, cancellationToken);
+
+            if (!expiredReservations.Any())
+                return 0;
+
+            await _unitOfWork.BeginTransactionAsync(cancellationToken);
+
+            // Track released seats grouped by EventId for notification batching
+            var releasedSeatsByEvent = new Dictionary<Guid, List<Guid>>();
+
+            try
+            {
+                foreach (var reservation in expiredReservations)
+                {
+                    reservation.Status = ReservationStatusEnum.Expired;
+
+                    if (!releasedSeatsByEvent.ContainsKey(reservation.EventId))
+                    {
+                        releasedSeatsByEvent[reservation.EventId] = new List<Guid>();
+                    }
+
+                    foreach (var item in reservation.ReservationItems)
+                    {
+                        if (item.EventSeat != null)
+                        {
+                            item.EventSeat.Status = SeatStatusEnum.Available;
+                            _unitOfWork.EventSeats.Update(item.EventSeat);
+                            releasedSeatsByEvent[reservation.EventId].Add(item.EventSeatId);
+                        }
+                    }
+
+                    _unitOfWork.Reservations.Update(reservation);
+                }
+
+                await _unitOfWork.CommitTransactionAsync(cancellationToken);
+
+                // 📢 Broadcast real-time update per event: Seats are now Available
+                foreach (var (eventId, seatIds) in releasedSeatsByEvent)
+                {
+                    if (seatIds.Any())
+                    {
+                        await _seatNotificationService.NotifySeatStatusChangedAsync(
+                            eventId,
+                            seatIds,
+                            SeatStatusEnum.Available.ToString()
+                        );
+                    }
+                }
+
+                return expiredReservations.Count;
             }
             catch
             {
@@ -83,39 +205,6 @@ namespace TicketFlow.BLL.Services.Classes
                 return null;
 
             return _mapper.Map<ReservationDto>(reservation);
-        }
-
-        public async Task<bool> CancelReservationAsync(Guid userId, Guid reservationId)
-        {
-            await _unitOfWork.BeginTransactionAsync();
-
-            try
-            {
-                var reservation = await _unitOfWork.Reservations.GetReservationWithItemsAsync(reservationId);
-                if (reservation == null || reservation.UserId != userId || reservation.Status != ReservationStatusEnum.Pending)
-                {
-                    return false;
-                }
-
-                reservation.Status = ReservationStatusEnum.Cancelled;
-
-                // Release reserved seats back to Available
-                foreach (var item in reservation.ReservationItems)
-                {
-                    item.EventSeat.Status = SeatStatusEnum.Available;
-                    _unitOfWork.EventSeats.Update(item.EventSeat);
-                }
-
-                _unitOfWork.Reservations.Update(reservation);
-                await _unitOfWork.CommitTransactionAsync();
-
-                return true;
-            }
-            catch
-            {
-                await _unitOfWork.RollbackTransactionAsync();
-                throw;
-            }
         }
     }
 }

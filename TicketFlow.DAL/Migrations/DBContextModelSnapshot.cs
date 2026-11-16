@@ -477,6 +477,10 @@ namespace TicketFlow.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<decimal>("TotalAmount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 

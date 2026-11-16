@@ -3,6 +3,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using System.Security.Claims;
 using System.Text;
+using TicketFlow.API.BackgroundServices;
+using TicketFlow.API.Hubs;
+using TicketFlow.API.Middlewares;
+using TicketFlow.API.Services.Classes;
 using TicketFlow.BLL;
 using TicketFlow.BLL.Services;
 using TicketFlow.BLL.Services.Interfaces;
@@ -10,7 +14,8 @@ using TicketFlow.BLL.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddBLLServices(builder.Configuration);
-
+builder.Services.AddSignalR();
+builder.Services.AddScoped<ISeatNotificationService, SeatNotificationService>();
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var secretKey = jwtSettings["Secret"]
     ?? throw new InvalidOperationException("JWT Secret is not configured in appsettings.json.");
@@ -60,7 +65,16 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("SignalRCors", policy =>
+    {
+        policy.SetIsOriginAllowed(_ => true) // Or allow set origins
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // 👈 Required for SignalR WebSockets/Server-Sent Events
+    });
+});
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -87,15 +101,15 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-
+builder.Services.AddHostedService<ExpiredReservationSweeper>();
 var app = builder.Build();
-
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("SignalRCors");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
@@ -104,5 +118,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 await app.SeedIdentityDataAsync();
-
+app.MapHub<SeatHub>("/hubs/seats").RequireCors("SignalRCors");
 app.Run();

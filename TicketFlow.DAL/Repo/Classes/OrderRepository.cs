@@ -25,10 +25,13 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
     public async Task<IReadOnlyList<Order>> GetOrdersByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         return await _dbSet
-            .Where(o => o.UserId == userId)
-            .Include(o => o.OrderItems)
-            .OrderByDescending(o => o.CreatedAt)
-            .AsNoTracking()
-            .ToListAsync(cancellationToken);
+                    .Where(o => o.UserId == userId)
+                    .Include(o => o.Payment)
+                    .Include(o => o.OrderItems)
+                        .ThenInclude(oi => oi.EventSeat)
+                            .ThenInclude(es => es.Seat)
+                    .OrderByDescending(o => o.CreatedAt)
+                    .AsNoTracking()
+                    .ToListAsync(cancellationToken);
     }
 }

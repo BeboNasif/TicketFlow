@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TicketFlow.BLL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4569be67f05513edcc6ac29032028270be853a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d9127712e30e32fd95c7d5242740c88d774fd0b")]
 [assembly: System.Reflection.AssemblyProductAttribute("TicketFlow.BLL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TicketFlow.BLL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

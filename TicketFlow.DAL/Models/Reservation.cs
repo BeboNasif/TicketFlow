@@ -19,7 +19,8 @@ namespace TicketFlow.DAL.Models
         public DateTime ReservedAt { get; set; } = DateTime.UtcNow;
         public DateTime ExpiresAt { get; set; }
         public ReservationStatusEnum Status { get; set; } = ReservationStatusEnum.Pending;
-
+        [Precision(18, 2)]
+        public decimal TotalAmount { get; set; }
         [ForeignKey(nameof(UserId))]
         public AppUser User { get; set; } = null!;
 

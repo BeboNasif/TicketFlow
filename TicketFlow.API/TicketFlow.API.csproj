@@ -10,6 +10,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="10.3.1"/>
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.3.1"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.13"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TicketFlow.BLL\TicketFlow.BLL.csproj"/>

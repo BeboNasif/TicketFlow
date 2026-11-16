@@ -16,7 +16,7 @@ public static class BLLServiceRegister
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
         services.AddAutoMapper(_ => { }, typeof(MappingProfile).Assembly);
-
+        services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IPlaceService, PlaceService>();
         services.AddScoped<IEventService, EventService>();
