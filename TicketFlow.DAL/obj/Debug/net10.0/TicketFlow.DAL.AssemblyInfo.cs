@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TicketFlow.DAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d9127712e30e32fd95c7d5242740c88d774fd0b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6036ec7cf882c804470c80253f177afb5641698d")]
 [assembly: System.Reflection.AssemblyProductAttribute("TicketFlow.DAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TicketFlow.DAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
